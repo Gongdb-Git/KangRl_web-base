@@ -10,7 +10,7 @@ const routes = [
     ],
   },
   {
-    path: '/dynamic', meta: { title: '动态Ecg', show: false },
+    path: '/dynamic', meta: { title: '动态Ecg', show: true },
     component: () => import('@/layout/Layout.vue'),
     children: [
 
@@ -18,13 +18,6 @@ const routes = [
   },
 ]
 
-
-
-const filterRoutes = (routes) => {
-  return routes.map(route => {
-    const newRoute = { ...route };
-  })
-}
 
 
 export default routes;  

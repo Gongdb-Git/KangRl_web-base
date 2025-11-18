@@ -2,8 +2,10 @@
 .layout 
   LayoutHeader.layout-header 
       template(v-slot)
+        .header-menu(v-if="headerMenu_leng" )
+            .menu(v-for="item in headerMenu" :key="item.path" @click="toPage(item)" :class="{ active: currentPath === item.path }")  {{item.title}}
   .layout-content
-    LayoutSider.layout-sider(:siderMenu="siderMenu") 
+    LayoutSider.layout-sider(:siderMenu="siderMenu" :currentPath="currentPath") 
     .layout-main 
       router-view
 
@@ -11,32 +13,42 @@
 
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import LayoutHeader from './components/LayoutHeader.vue';
 import LayoutSider from './components/LayoutSider.vue';
 import routes from '@/route/routes';
-console.log(routes,'---routes---');
-const siderMenu =ref([]);
+import { useRouter } from 'vue-router';
+const router = useRouter(); 
+const siderMenu =ref({});
+const currentPath=ref("")
 const headerMenu =ref([]) 
+const headerMenu_leng=computed(()=>{
+  return headerMenu.value.length>1
+})
 function createMenu(){
-  siderMenu.value=[];
-  headerMenu.value=[];  
-  const menu={};
-  headerMenu.value= routes.map(item=>{
+  siderMenu.value={}
+  headerMenu.value=routes.filter(item => item.meta.show).map(item=>{
+    let path=item.path
+    siderMenu.value[path]=item.children||[]
     return{
         title:item.meta.title,
-        path:item.path,
+        path,
+        meta:item.meta
       }
   })
-  console.log('menu',menu);
+  currentPath.value=headerMenu.value.length > 0 ? headerMenu.value[0].path : "";
 } 
-
+function toPage(item){
+  currentPath.value=item.path;
+  router.push(item.path);
+}
 onMounted(()=>{
-  createMenu(routes);
+  createMenu();
 })  
 </script>
 
 <style scoped lang="less">
+@import url('@/assets/css/common.less');
 @header-height: 64px;
 .layout{
   width: 100%;
@@ -59,6 +71,29 @@ onMounted(()=>{
 } 
 .layout-main{
   flex: 1;
+}
+
+
+.header-menu {
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  .menu{
+    margin-right: 20px;
+    cursor: pointer;
+    background-color: #c9c9c9;
+    color: @there-color;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: all 0.3s;
+    &:hover{
+    background-color: #fff;
+    }
+  }
+  .active{
+    background-color: #fff;
+  }
+
 }
 
 </style>

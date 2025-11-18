@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 const useCacheStore = defineStore('cache', {
     state: () => ({
-
+            
     }),
     actions: {
         act(key, value) {

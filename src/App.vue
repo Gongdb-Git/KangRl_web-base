@@ -9,11 +9,13 @@
   import 'dayjs/locale/zh-cn';
   dayjs.locale('zh-cn');
 </script> 
-<style scoped lang="less">
 
-.app-container {
-  width: 100%;
-  height: 100vh;
-  background-color: #f0f2f5;
-}
+
+<style >
+
+</style>
+
+<style scoped lang="less">
+@import '@/assets/css/common.less';
+
 </style>

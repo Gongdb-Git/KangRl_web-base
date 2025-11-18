@@ -61,7 +61,7 @@ onUnmounted(()=>{
 </script>
 
 <style scoped lang="less">
-@import '@/assets/css/common.less';
+@import url('@/assets/css/common.less');
 .layout-header{
     color: #fff;
     padding:  0 10px;
