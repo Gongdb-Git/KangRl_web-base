@@ -2,7 +2,7 @@
 .layout 
   LayoutHeader.layout-header 
       template(v-slot)
-        .header-menu(v-if="headerMenu_leng" )
+        .header-menu(v-if="headerMenu_length>1" )
             .menu(v-for="item in headerMenu" :key="item.path" @click="toPage(item)" :class="{ active: currentPath === item.path }")  {{item.title}}
   .layout-content
     LayoutSider.layout-sider(:siderMenu="siderMenu" ) 
@@ -13,29 +13,25 @@
 
 
 <script setup>
-import { computed, onMounted, ref } from 'vue';
+import { computed, ref,watch } from 'vue';
 import LayoutHeader from './components/LayoutHeader.vue';
 import LayoutSider from './components/LayoutSider.vue';
 import routes from '@/route/routes';
 import { useRouter, useRoute } from 'vue-router';
-import { watch } from 'less';
+import useCacheStore from '@/store/cache';
+
+const {currentRoute,menus} = useCacheStore();
+
 const router = useRouter(); 
 const route = useRoute();
-watch(
-  () => route.path,
-  (newPath) => {
-    currentPath.value = newPath;
-  },
-  { immediate: true } 
-);  
-
 
 const siderMenu =ref({});
 const currentPath=ref("")
-const headerMenu =ref([]) 
-const headerMenu_leng=computed(()=>{
-  return headerMenu.value.length>1
+const headerMenu =ref([])
+const headerMenu_length=computed(()=>{
+  return headerMenu.value.length
 })
+
 function createMenu(){
   siderMenu.value={}
   headerMenu.value=routes.filter(item => item.meta.show).map(item=>{
@@ -47,13 +43,19 @@ function createMenu(){
         meta:item.meta
       }
   })
-  currentPath.value=headerMenu.value.length > 0 ? headerMenu.value[0].path : "";
-} 
+}
+
 function toPage(item){
   currentPath.value=item.path;
   router.push(item.path);
 }
-
+watch(
+  () => route.path,
+  (newPath) => {
+    currentPath.value = newPath;
+  },
+  { immediate: true } 
+);  
 </script>
 
 <style scoped lang="less">

@@ -8,5 +8,11 @@ const useDictStore = defineStore('dict', {
             this[key] = value;
         },
     },
+       persist: {
+        enabled: true,
+        strategies: [
+            { storage: sessionStorage },
+        ]
+    }
 })
 export default useDictStore;

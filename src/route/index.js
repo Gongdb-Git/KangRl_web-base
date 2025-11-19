@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import route from './routes.js'
+
 const routes = [
     {
         path: '/',
@@ -14,9 +15,6 @@ const routes = [
     ...route,
 
 ]
-
-console.log('路由表--->', routes);
-
 const router = createRouter({
     history: createWebHashHistory(),
     routes,

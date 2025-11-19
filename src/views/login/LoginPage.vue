@@ -10,11 +10,11 @@
 
 <script setup>
 import { Input,Button} from 'ant-design-vue';
-import { ref } from 'vue';
 import { onMounted } from 'vue';  
+import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
+const userStore = useUserStore();
 const router = useRouter();   
-
 
 function login(){
   // 模拟登录成功，实际应用中应进行身份验证
