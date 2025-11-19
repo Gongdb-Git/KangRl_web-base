@@ -12,10 +12,13 @@
 
 
 <style >
-
+@import '@/assets/css/common.less';
+@font-face {
+  font-family: "AlimamaShuHeiTi";
+  src: url("@/assets/font/AlimamaShuHeiTi-Bold.ttf");
+}
 </style>
 
 <style scoped lang="less">
-@import '@/assets/css/common.less';
 
 </style>

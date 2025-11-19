@@ -5,7 +5,7 @@
         .header-menu(v-if="headerMenu_leng" )
             .menu(v-for="item in headerMenu" :key="item.path" @click="toPage(item)" :class="{ active: currentPath === item.path }")  {{item.title}}
   .layout-content
-    LayoutSider.layout-sider(:siderMenu="siderMenu" :currentPath="currentPath") 
+    LayoutSider.layout-sider(:siderMenu="siderMenu" ) 
     .layout-main 
       router-view
 
@@ -17,8 +17,19 @@ import { computed, onMounted, ref } from 'vue';
 import LayoutHeader from './components/LayoutHeader.vue';
 import LayoutSider from './components/LayoutSider.vue';
 import routes from '@/route/routes';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
+import { watch } from 'less';
 const router = useRouter(); 
+const route = useRoute();
+watch(
+  () => route.path,
+  (newPath) => {
+    currentPath.value = newPath;
+  },
+  { immediate: true } 
+);  
+
+
 const siderMenu =ref({});
 const currentPath=ref("")
 const headerMenu =ref([]) 
@@ -42,9 +53,7 @@ function toPage(item){
   currentPath.value=item.path;
   router.push(item.path);
 }
-onMounted(()=>{
-  createMenu();
-})  
+
 </script>
 
 <style scoped lang="less">

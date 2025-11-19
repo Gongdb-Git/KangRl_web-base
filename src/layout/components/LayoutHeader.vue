@@ -1,13 +1,12 @@
 <template lang="pug">
 .layout-header
     .layout-header-left  
-        .now-time {{nowTime}}
+        //- .now-time {{nowTime}}
         .app-name {{appName}}
     .layout-header-center   
         slot
     .layout-header-right 
         .user-icon(v-if="false")
-            img(src="@/assets/images/u.png" class="user-avatar")
         .user-name 
             Dropdown
                 a(class="ant-dropdown-link" )
@@ -22,7 +21,7 @@
 let timer=null
 import dayjs from 'dayjs';
 import { DownOutlined  } from '@ant-design/icons-vue';
-import { Avatar,Dropdown,Menu,MenuItem } from 'ant-design-vue';
+import { Dropdown,Menu,MenuItem } from 'ant-design-vue';
 import { computed, onMounted, onUnmounted, ref   } from 'vue';
 import useUserStore from '@/store/user';
 
@@ -43,10 +42,10 @@ function setEvent({key}){
 const nowTime=ref(null) ;
 function setTimeShow(){
   clearInterval(timer);  
-    timer=
-    setInterval(() => {
-        nowTime.value=dayjs().format('YYYY/MM/DD HH:mm:ss');
-    },1000);
+    // timer=
+    // setInterval(() => {
+    //     nowTime.value=dayjs().format('YYYY/MM/DD HH:mm:ss');
+    // },1000);
 }
 
 

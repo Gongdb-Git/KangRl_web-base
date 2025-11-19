@@ -1,6 +1,5 @@
 <template lang="pug">
 .layout-sider 
-    .item(v-for="item in 30" ) {{appName}}  
     a-menu(
       v-model:openKeys="openKeys"
       v-model:selectedKeys="selectedKeys"
@@ -21,10 +20,6 @@ const props = defineProps({
     type: Object,
     required: true
   },
-  currentPath: {
-    type: String,
-    required: true
-  }
 }); 
 
 watch(() =>route.fullPath, (route) => {
